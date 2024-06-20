@@ -282,7 +282,14 @@ namespace System.Windows
         InactiveSelectionHighlightBrush,
         InactiveSelectionHighlightTextBrush,
 
-        InternalSystemColorsExtendedEnd
+        InternalSystemColorsExtendedEnd,
+
+        InternalSystemAccentColorsStart,
+
+        SystemAccentColor,
+        SystemAccentColorPrimary,
+
+        InternalSystemAccentColorsEnd
     }
 
 #if !PBTCOMPILER
@@ -1071,6 +1078,12 @@ namespace System.Windows
 
                     case SystemResourceKeyID.PowerLineStatus:
                         return SystemParameters.PowerLineStatus;
+
+                    case SystemResourceKeyID.SystemAccentColor:
+                        return SystemColors.SystemAccentColor;
+
+                    case SystemResourceKeyID.SystemAccentColorPrimary:
+                        return SystemColors.SystemAccentColorPrimary;
                 }
 
                 return null;
@@ -1266,6 +1279,12 @@ namespace System.Windows
 
                 case (short)SystemResourceKeyID.WindowTextColor:
                     return SystemColors.WindowTextColorKey;
+
+                case (short)SystemResourceKeyID.SystemAccentColor:
+                    return SystemColors.SystemAccentColorKey;
+
+                case (short)SystemResourceKeyID.SystemAccentColorPrimary:
+                    return SystemColors.SystemAccentColorPrimaryKey;
 
                 case (short)SystemResourceKeyID.ThinHorizontalBorderHeight:
                     return SystemParameters.ThinHorizontalBorderHeightKey;
@@ -1858,7 +1877,8 @@ namespace System.Windows
             Debug.Assert(((SystemResourceKeyID.InternalSystemColorsStart < id) && (id < SystemResourceKeyID.InternalSystemColorsEnd)) ||
                 ((SystemResourceKeyID.InternalSystemFontsStart < id) && (id < SystemResourceKeyID.InternalSystemFontsEnd)) ||
                 ((SystemResourceKeyID.InternalSystemParametersStart < id) && (id < SystemResourceKeyID.InternalSystemParametersEnd)) ||
-                ((SystemResourceKeyID.InternalSystemColorsExtendedStart < id) && (id < SystemResourceKeyID.InternalSystemColorsExtendedEnd)),
+                ((SystemResourceKeyID.InternalSystemColorsExtendedStart < id) && (id < SystemResourceKeyID.InternalSystemColorsExtendedEnd)) ||
+                ((SystemResourceKeyID.InternalSystemAccentColorsStart < id) && (id < SystemResourceKeyID.InternalSystemAccentColorsEnd)),
                 $"Invalid SystemResourceKeyID (id={(int)id})");
             _id = id;
         }

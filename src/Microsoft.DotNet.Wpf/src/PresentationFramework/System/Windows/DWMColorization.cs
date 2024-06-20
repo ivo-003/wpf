@@ -51,7 +51,7 @@ internal static class DwmColorization
     internal static void UpdateAccentColors()
     {
         Color systemAccent = GetSystemAccentColor();
-        Color primaryAccent, secondaryAccent, tertiaryAccent;
+        // Color primaryAccent, secondaryAccent, tertiaryAccent;
 
         if (systemAccent != _currentApplicationAccentColor)
         {
@@ -61,19 +61,22 @@ internal static class DwmColorization
         if (ThemeManager.IsSystemThemeLight())
         {
             // In light mode, we use darker shades of the accent color
-            primaryAccent = _UISettings.AccentDark1;
-            secondaryAccent = _UISettings.AccentDark2;
-            tertiaryAccent = _UISettings.AccentDark3;
+            SystemAccentColorPrimary = _UISettings.AccentDark1;
+            SystemAccentColorSecondary = _UISettings.AccentDark2;
+            SystemAccentColorTertiary = _UISettings.AccentDark3;
         }
         else
         {
             // In dark mode, we use lighter shades of the accent color
-            primaryAccent = _UISettings.AccentLight1;
-            secondaryAccent = _UISettings.AccentLight2;
-            tertiaryAccent = _UISettings.AccentLight3;
+            SystemAccentColorPrimary = _UISettings.AccentLight1;
+            SystemAccentColorSecondary = _UISettings.AccentLight2;
+            SystemAccentColorTertiary = _UISettings.AccentLight3;
         }
 
-        UpdateColorResources(systemAccent, primaryAccent, secondaryAccent, tertiaryAccent);
+        SystemAccentColor = systemAccent;
+        UpdateColorResources(SystemAccentColor, SystemAccentColorPrimary, 
+            SystemAccentColorSecondary, SystemAccentColorTertiary);
+        
         _currentApplicationAccentColor = systemAccent;
     }
 
@@ -86,27 +89,10 @@ internal static class DwmColorization
         Color secondaryAccent,
         Color tertiaryAccent)
     {
-#if DEBUG
-        System.Diagnostics.Debug.WriteLine("INFO | SystemAccentColor: " + systemAccent, "System.Windows.Accent");
-        System
-            .Diagnostics
-            .Debug
-            .WriteLine("INFO | SystemAccentColorPrimary: " + primaryAccent, "System.Windows.Accent");
-        System
-            .Diagnostics
-            .Debug
-            .WriteLine("INFO | SystemAccentColorSecondary: " + secondaryAccent, "System.Windows.Accent");
-        System
-            .Diagnostics
-            .Debug
-            .WriteLine("INFO | SystemAccentColorTertiary: " + tertiaryAccent, "System.Windows.Accent");
-#endif
+
 
         if (!ThemeManager.IsSystemThemeLight())
         {
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine("INFO | Text on accent is DARK", "System.Windows.Accent");
-#endif
             Application.Current.Resources["TextOnAccentFillColorPrimary"] = 
                     Color.FromArgb( 0xFF, 0x00, 0x00, 0x00);
             
@@ -124,9 +110,6 @@ internal static class DwmColorization
         }
         else
         {
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine("INFO | Text on accent is LIGHT", "System.Windows.Accent");
-#endif
             Application.Current.Resources["TextOnAccentFillColorPrimary"] = 
                     Color.FromArgb( 0xFF, 0xFF, 0xFF, 0xFF);
             
@@ -143,8 +126,8 @@ internal static class DwmColorization
                     Color.FromArgb( 0x5D, 0xFF, 0xFF, 0xFF);
         }
 
-        Application.Current.Resources["SystemAccentColor"] = systemAccent;
-        Application.Current.Resources["SystemAccentColorPrimary"] = primaryAccent;
+        // Application.Current.Resources["SystemAccentColor"] = systemAccent;
+        // Application.Current.Resources["SystemAccentColorPrimary"] = primaryAccent;
         Application.Current.Resources["SystemAccentColorSecondary"] = secondaryAccent;
         Application.Current.Resources["SystemAccentColorTertiary"] = tertiaryAccent;
 
@@ -160,6 +143,7 @@ internal static class DwmColorization
         Application.Current.Resources["AccentFillColorTertiaryBrush"] = ToBrush(secondaryAccent, 0.8);
     }
 
+
     /// <summary>
     /// Creates a <see cref="SolidColorBrush"/> from a <see cref="System.Windows.Media.Color"/> with defined brush opacity.
     /// </summary>
@@ -170,4 +154,12 @@ internal static class DwmColorization
     {
         return new SolidColorBrush { Color = color, Opacity = opacity };
     }
+
+    internal static Color SystemAccentColor {get; set;}
+
+    internal static Color SystemAccentColorPrimary {get; set;}
+
+    internal static Color SystemAccentColorSecondary {get; set;} 
+
+    internal static Color SystemAccentColorTertiary {get; set;}
 }

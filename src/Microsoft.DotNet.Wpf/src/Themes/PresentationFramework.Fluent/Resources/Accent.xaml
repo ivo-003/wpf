@@ -19,9 +19,9 @@
     <!--  SystemAccentColorDark3 | SystemAccentColorLight3  -->
     <Color x:Key="SystemAccentColorTertiary">#add8ff</Color>
 
-    <SolidColorBrush x:Key="SystemAccentColorBrush" Color="{StaticResource SystemAccentColor}" />
+    <SolidColorBrush x:Key="SystemAccentColorBrush" Color="{DynamicResource {x:Static SystemColors.SystemAccentColorKey}}" />
 
-    <SolidColorBrush x:Key="SystemAccentColorPrimaryBrush" Color="{StaticResource SystemAccentColorPrimary}" />
+    <SolidColorBrush x:Key="SystemAccentColorPrimaryBrush" Color="{DynamicResource {x:Static SystemColors.SystemAccentColorPrimaryKey}}" />
     <SolidColorBrush x:Key="SystemAccentColorSecondaryBrush" Color="{StaticResource SystemAccentColorSecondary}" />
     <SolidColorBrush x:Key="SystemAccentColorTertiaryBrush" Color="{StaticResource SystemAccentColorTertiary}" />
 

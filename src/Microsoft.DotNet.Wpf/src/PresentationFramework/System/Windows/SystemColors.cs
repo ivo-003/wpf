@@ -347,6 +347,22 @@ namespace System.Windows
             }
         }
 
+        internal static Color SystemAccentColor
+        {
+            get
+            {
+                return GetAccentColor(CacheSlot.SystemAccentColor);
+            }
+        }
+
+        internal static Color SystemAccentColorPrimary
+        {
+            get
+            {
+                return GetAccentColor(CacheSlot.SystemAccentColorPrimary);
+            }
+        }
+
         #endregion
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
@@ -834,6 +850,32 @@ namespace System.Windows
                 }
 
                 return _cacheWindowTextColor;
+            }
+        }
+
+        internal static ResourceKey SystemAccentColorKey
+        {
+            get
+            {
+                if (_cacheSystemAccentColor == null)
+                {
+                    _cacheSystemAccentColor = CreateInstance(SystemResourceKeyID.SystemAccentColor);
+                }
+
+                return _cacheSystemAccentColor;
+            }
+        }
+
+        internal static ResourceKey SystemAccentColorPrimaryKey
+        {
+            get
+            {
+                if (_cacheSystemAccentColorPrimary == null)
+                {
+                    _cacheSystemAccentColorPrimary = CreateInstance(SystemResourceKeyID.SystemAccentColorPrimary);
+                }
+
+                return _cacheSystemAccentColorPrimary;
             }
         }
 
@@ -1808,6 +1850,39 @@ namespace System.Windows
             return color;
         }
 
+        private static Color GetAccentColor(CacheSlot slot)
+        {
+            Color color;
+
+            lock (_colorCacheValid)
+            {
+                // the loop protects against a race condition - see SystemParameters
+                while (!_colorCacheValid[(int)slot])
+                {
+                    _colorCacheValid[(int)slot] = true;
+
+                    switch (slot)
+                    {
+                        case CacheSlot.SystemAccentColor:
+                            color = DwmColorization.SystemAccentColor;
+                            break;
+                        case CacheSlot.SystemAccentColorPrimary:
+                            color = DwmColorization.SystemAccentColorPrimary;
+                            break;
+                        default:
+                            color = Colors.Transparent;
+                            break;
+                    }
+
+                    _colorCache[(int)slot] = color;
+                }
+
+                color = _colorCache[(int)slot];
+            }
+
+            return color;
+        }
+
         private static SolidColorBrush MakeBrush(CacheSlot slot)
         {
             SolidColorBrush brush;
@@ -1934,7 +2009,8 @@ namespace System.Windows
             Window,
             WindowFrame,
             WindowText,
-
+            SystemAccentColor,
+            SystemAccentColorPrimary,
             NumSlots
         }
 
@@ -2005,6 +2081,8 @@ namespace System.Windows
         private static SystemResourceKey _cacheWindowColor;
         private static SystemResourceKey _cacheWindowFrameColor;
         private static SystemResourceKey _cacheWindowTextColor;
+        private static SystemResourceKey _cacheSystemAccentColor;
+        private static SystemResourceKey _cacheSystemAccentColorPrimary;
 
         #endregion
     }
