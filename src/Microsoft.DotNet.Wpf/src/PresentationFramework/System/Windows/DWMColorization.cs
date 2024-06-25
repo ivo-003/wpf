@@ -22,6 +22,20 @@ internal static class DwmColorization
         get { return _currentApplicationAccentColor; }
     }
 
+
+    #region Accent Colors Properties
+
+    internal static Color AccentColor
+    {
+        get { return _currentApplicationAccentColor; }
+    }
+
+    internal static Color AccentColorPrimary { get; set; }
+    internal static Color AccentColorSecondary { get; set; }
+    internal static Color AccentColorTertiary { get; set;}
+
+    #endregion
+
     internal static UISettings _UISettings
     {
         get
@@ -51,7 +65,6 @@ internal static class DwmColorization
     internal static void UpdateAccentColors()
     {
         Color systemAccent = GetSystemAccentColor();
-        Color primaryAccent, secondaryAccent, tertiaryAccent;
 
         if (systemAccent != _currentApplicationAccentColor)
         {
@@ -61,19 +74,46 @@ internal static class DwmColorization
         if (ThemeManager.IsSystemThemeLight())
         {
             // In light mode, we use darker shades of the accent color
-            primaryAccent = _UISettings.AccentDark1;
-            secondaryAccent = _UISettings.AccentDark2;
-            tertiaryAccent = _UISettings.AccentDark3;
+            AccentColorPrimary = _UISettings.AccentDark1;
+            AccentColorSecondary = _UISettings.AccentDark2;
+            AccentColorTertiary = _UISettings.AccentDark3;
         }
         else
         {
             // In dark mode, we use lighter shades of the accent color
-            primaryAccent = _UISettings.AccentLight1;
-            secondaryAccent = _UISettings.AccentLight2;
-            tertiaryAccent = _UISettings.AccentLight3;
+            AccentColorPrimary = _UISettings.AccentLight1;
+            AccentColorSecondary = _UISettings.AccentLight2;
+            AccentColorTertiary = _UISettings.AccentLight3;
         }
 
-        UpdateColorResources(systemAccent, primaryAccent, secondaryAccent, tertiaryAccent);
+        UpdateColorResources(systemAccent, AccentColorPrimary, AccentColorSecondary, AccentColorTertiary);
+        _currentApplicationAccentColor = systemAccent;
+    }
+
+    internal static void UpdateCachedAccentColors()
+    {
+        Color systemAccent = GetSystemAccentColor();
+
+        if (systemAccent != _currentApplicationAccentColor)
+        {
+            _UISettings.TryUpdateAccentColors();
+        }
+
+        if (ThemeManager.IsSystemThemeLight())
+        {
+            // In light mode, we use darker shades of the accent color
+            AccentColorPrimary = _UISettings.AccentDark1;
+            AccentColorSecondary = _UISettings.AccentDark2;
+            AccentColorTertiary = _UISettings.AccentDark3;
+        }
+        else
+        {
+            // In dark mode, we use lighter shades of the accent color
+            AccentColorPrimary = _UISettings.AccentLight1;
+            AccentColorSecondary = _UISettings.AccentLight2;
+            AccentColorTertiary = _UISettings.AccentLight3;
+        }
+
         _currentApplicationAccentColor = systemAccent;
     }
 
@@ -86,27 +126,9 @@ internal static class DwmColorization
         Color secondaryAccent,
         Color tertiaryAccent)
     {
-#if DEBUG
-        System.Diagnostics.Debug.WriteLine("INFO | SystemAccentColor: " + systemAccent, "System.Windows.Accent");
-        System
-            .Diagnostics
-            .Debug
-            .WriteLine("INFO | SystemAccentColorPrimary: " + primaryAccent, "System.Windows.Accent");
-        System
-            .Diagnostics
-            .Debug
-            .WriteLine("INFO | SystemAccentColorSecondary: " + secondaryAccent, "System.Windows.Accent");
-        System
-            .Diagnostics
-            .Debug
-            .WriteLine("INFO | SystemAccentColorTertiary: " + tertiaryAccent, "System.Windows.Accent");
-#endif
 
         if (!ThemeManager.IsSystemThemeLight())
         {
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine("INFO | Text on accent is DARK", "System.Windows.Accent");
-#endif
             Application.Current.Resources["TextOnAccentFillColorPrimary"] = 
                     Color.FromArgb( 0xFF, 0x00, 0x00, 0x00);
             
@@ -124,9 +146,6 @@ internal static class DwmColorization
         }
         else
         {
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine("INFO | Text on accent is LIGHT", "System.Windows.Accent");
-#endif
             Application.Current.Resources["TextOnAccentFillColorPrimary"] = 
                     Color.FromArgb( 0xFF, 0xFF, 0xFF, 0xFF);
             

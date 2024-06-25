@@ -2476,7 +2476,7 @@ To automatically copy the files, set the environment variable
     <Style x:Key="{x:Type Label}"
            TargetType="{x:Type Label}">
         <Setter Property="Foreground"
-                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                Value="{DynamicResource {x:Static SystemColors.AccentColorBrushKey}}"/>
         <Setter Property="Background"
                 Value="Transparent"/>
         <Setter Property="Padding"

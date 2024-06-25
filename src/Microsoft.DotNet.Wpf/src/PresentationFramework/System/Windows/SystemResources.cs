@@ -1434,6 +1434,16 @@ namespace System.Windows
 
                 case WindowMessage.WM_DWMCOLORIZATIONCOLORCHANGED:
                     SystemParameters.InvalidateWindowGlassColorizationProperties();
+                    //DwmColorization.UpdateCachedAccentColors();
+                    //SystemColors.InvalidateCache();
+
+                    if(SystemColors.InvalidateCache())
+                    {
+                        DwmColorization.UpdateCachedAccentColors();
+                        OnSystemValueChanged();
+                        InvalidateResources(true);
+                    }
+                    //OnThemeChanged();
                     break;
             }
 

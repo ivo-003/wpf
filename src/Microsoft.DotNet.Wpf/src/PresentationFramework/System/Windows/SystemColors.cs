@@ -347,6 +347,38 @@ namespace System.Windows
             }
         }
 
+        public static Color AccentColor
+        {
+            get
+            {
+                return GetAccentColor(CacheSlot.AccentColor);
+            }
+        }
+
+        public static Color AccentColorPrimary
+        {
+            get
+            {
+                return GetAccentColor(CacheSlot.AccentColorPrimary);
+            }
+        }
+
+        public static Color AccentColorSecondary
+        {
+            get
+            {
+                return GetAccentColor(CacheSlot.AccentColorSecondary);
+            }
+        }
+
+        public static Color AccentColorTertiary
+        {
+            get
+            {
+                return GetAccentColor(CacheSlot.AccentColorTertiary);
+            }
+        }
+
         #endregion
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
@@ -837,6 +869,59 @@ namespace System.Windows
             }
         }
 
+        public static ResourceKey AccentColorKey
+        {
+            get
+            {
+                if (_cacheAccentColor == null)
+                {
+                    _cacheAccentColor = CreateInstance(SystemResourceKeyID.AccentColor);
+                }
+
+                return _cacheAccentColor;
+            }
+        }
+
+        public static ResourceKey AccentColorPrimaryKey
+        {
+            get
+            {
+                if (_cacheAccentColorPrimary == null)
+                {
+                    _cacheAccentColorPrimary = CreateInstance(SystemResourceKeyID.AccentColorPrimary);
+                }
+
+                return _cacheAccentColorPrimary;
+            }
+        }
+
+        public static ResourceKey AccentColorSecondaryKey
+        {
+            get
+            {
+                if (_cacheAccentColorSecondary == null)
+                {
+                    _cacheAccentColorSecondary = CreateInstance(SystemResourceKeyID.AccentColorSecondary);
+                }
+
+                return _cacheAccentColorSecondary;
+            }
+        }
+
+        public static ResourceKey AccentColorTertiaryKey
+        {
+            get
+            {
+                if (_cacheAccentColorTertiary == null)
+                {
+                    _cacheAccentColorTertiary = CreateInstance(SystemResourceKeyID.AccentColorTertiary);
+                }
+
+                return _cacheAccentColorTertiary;
+            }
+        }
+
+
         #endregion
 
         #region Brushes
@@ -1209,6 +1294,66 @@ namespace System.Windows
                 else
                 {
                     return SystemColors.ControlTextBrush;
+                }
+            }
+        }
+
+        public static SolidColorBrush AccentColorBrush
+        {
+            get
+            {
+                if (SystemParameters.HighContrast)
+                {
+                    return SystemColors.HighlightTextBrush;
+                }
+                else
+                {
+                    return MakeAccentBrush(CacheSlot.AccentColor);
+                }
+            }
+        }
+
+        public static SolidColorBrush AccentColorPrimaryBrush
+        {
+            get
+            {
+                if (SystemParameters.HighContrast)
+                {
+                    return SystemColors.HighlightTextBrush;
+                }
+                else
+                {
+                    return MakeAccentBrush(CacheSlot.AccentColorPrimary);
+                }
+            }
+        }
+
+        public static SolidColorBrush AccentColorSecondaryBrush
+        {
+            get
+            {
+                if (SystemParameters.HighContrast)
+                {
+                    return SystemColors.HighlightTextBrush;
+                }
+                else
+                {
+                    return MakeAccentBrush(CacheSlot.AccentColorSecondary);
+                }
+            }
+        }
+
+        public static SolidColorBrush AccentColorTertiaryBrush
+        {
+            get
+            {
+                if (SystemParameters.HighContrast)
+                {
+                    return SystemColors.HighlightTextBrush;
+                }
+                else
+                {
+                    return MakeAccentBrush(CacheSlot.AccentColorTertiary);
                 }
             }
         }
@@ -1743,6 +1888,58 @@ namespace System.Windows
             }
         }
 
+        public static ResourceKey AccentColorBrushKey
+        {
+            get
+            {
+                if(_cacheAccentColorBrush == null)
+                {
+                    _cacheAccentColorBrush = CreateInstance(SystemResourceKeyID.AccentColorBrush);
+                }
+
+                return _cacheAccentColorBrush;
+            }
+        }
+
+        public static ResourceKey AccentColorPrimaryBrushKey
+        {
+            get
+            {
+                if(_cacheAccentColorPrimaryBrush == null)
+                {
+                    _cacheAccentColorPrimaryBrush = CreateInstance(SystemResourceKeyID.AccentColorPrimaryBrush);
+                }
+
+                return _cacheAccentColorPrimaryBrush;
+            }
+        }
+
+        public static ResourceKey AccentColorSecondaryBrushKey
+        {
+            get
+            {
+                if(_cacheAccentColorSecondaryBrush == null)
+                {
+                    _cacheAccentColorSecondaryBrush = CreateInstance(SystemResourceKeyID.AccentColorSecondaryBrush);
+                }
+
+                return _cacheAccentColorSecondaryBrush;
+            }
+        }
+
+        public static ResourceKey AccentColorTertiaryBrushKey
+        {
+            get
+            {
+                if(_cacheAccentColorTertiaryBrush == null)
+                {
+                    _cacheAccentColorTertiaryBrush = CreateInstance(SystemResourceKeyID.AccentColorTertiaryBrush);
+                }
+
+                return _cacheAccentColorTertiaryBrush;
+            }
+        }
+
         #endregion
 
         #region Implementation
@@ -1751,6 +1948,7 @@ namespace System.Windows
         {
             bool color = SystemResources.ClearBitArray(_colorCacheValid);
             bool brush = SystemResources.ClearBitArray(_brushCacheValid);
+            DwmColorization.UpdateCachedAccentColors();
             return color || brush;
         }
 
@@ -1808,6 +2006,44 @@ namespace System.Windows
             return color;
         }
 
+        private static Color GetAccentColor(CacheSlot slot)
+        {
+            Color color;
+
+            lock (_colorCacheValid)
+            {
+                while(!_colorCacheValid[(int)slot])
+                {
+                    _colorCacheValid[(int)slot] = true;
+
+                    switch(slot)
+                    {
+                        case CacheSlot.AccentColor:
+                            color = DwmColorization.AccentColor;
+                            break;
+                        case CacheSlot.AccentColorPrimary:
+                            color = DwmColorization.AccentColorPrimary;
+                            break;
+                        case CacheSlot.AccentColorSecondary:
+                            color = DwmColorization.AccentColorSecondary;
+                            break;
+                        case CacheSlot.AccentColorTertiary:
+                            color = DwmColorization.AccentColorTertiary;
+                            break;
+                        default:
+                            color = Colors.Transparent;
+                            break;
+                    }
+
+                    _colorCache[(int)slot] = color;
+                }
+
+                color = _colorCache[(int)slot];
+            }
+
+            return color;
+        }
+
         private static SolidColorBrush MakeBrush(CacheSlot slot)
         {
             SolidColorBrush brush;
@@ -1820,6 +2056,28 @@ namespace System.Windows
                     _brushCacheValid[(int)slot] = true;
 
                     brush = new SolidColorBrush(GetSystemColor(slot));
+                    brush.Freeze();
+
+                    _brushCache[(int)slot] = brush;
+                }
+
+                brush = _brushCache[(int)slot];
+            }
+
+            return brush;
+        }
+
+        private static SolidColorBrush MakeAccentBrush(CacheSlot slot)
+        {
+            SolidColorBrush brush;
+
+            lock(_brushCacheValid)
+            {
+                while(!_brushCacheValid[(int)slot])
+                {
+                    _brushCacheValid[(int)slot] = true;
+
+                    brush = new SolidColorBrush(GetAccentColor(slot));
                     brush.Freeze();
 
                     _brushCache[(int)slot] = brush;
@@ -1934,6 +2192,10 @@ namespace System.Windows
             Window,
             WindowFrame,
             WindowText,
+            AccentColor,
+            AccentColorPrimary,
+            AccentColorSecondary,
+            AccentColorTertiary,
 
             NumSlots
         }
@@ -1975,6 +2237,10 @@ namespace System.Windows
         private static SystemResourceKey _cacheWindowTextBrush;
         private static SystemResourceKey _cacheInactiveSelectionHighlightBrush;
         private static SystemResourceKey _cacheInactiveSelectionHighlightTextBrush;
+        private static SystemResourceKey _cacheAccentColorBrush;
+        private static SystemResourceKey _cacheAccentColorPrimaryBrush;
+        private static SystemResourceKey _cacheAccentColorSecondaryBrush;
+        private static SystemResourceKey _cacheAccentColorTertiaryBrush;
         private static SystemResourceKey _cacheActiveBorderColor;
         private static SystemResourceKey _cacheActiveCaptionColor;
         private static SystemResourceKey _cacheActiveCaptionTextColor;
@@ -2005,6 +2271,10 @@ namespace System.Windows
         private static SystemResourceKey _cacheWindowColor;
         private static SystemResourceKey _cacheWindowFrameColor;
         private static SystemResourceKey _cacheWindowTextColor;
+        private static SystemResourceKey _cacheAccentColor;
+        private static SystemResourceKey _cacheAccentColorPrimary;
+        private static SystemResourceKey _cacheAccentColorSecondary;
+        private static SystemResourceKey _cacheAccentColorTertiary;
 
         #endregion
     }

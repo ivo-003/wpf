@@ -87,6 +87,14 @@ namespace System.Windows
         WindowColor,
         WindowFrameColor,
         WindowTextColor,
+        AccentColor,
+        AccentColorPrimary,
+        AccentColorSecondary,
+        AccentColorTertiary,
+        AccentColorBrush,
+        AccentColorPrimaryBrush,
+        AccentColorSecondaryBrush,
+        AccentColorTertiaryBrush,
 
         InternalSystemColorsEnd,
 
@@ -535,6 +543,18 @@ namespace System.Windows
                     case SystemResourceKeyID.InactiveSelectionHighlightTextBrush:
                         return SystemColors.InactiveSelectionHighlightTextBrush;
 
+                    case SystemResourceKeyID.AccentColorBrush:
+                        return SystemColors.AccentColorBrush;
+
+                    case SystemResourceKeyID.AccentColorPrimaryBrush:
+                        return SystemColors.AccentColorPrimaryBrush;
+
+                    case SystemResourceKeyID.AccentColorSecondaryBrush:
+                        return SystemColors.AccentColorSecondaryBrush;
+
+                    case SystemResourceKeyID.AccentColorTertiaryBrush:
+                        return SystemColors.AccentColorTertiaryBrush;
+
                     case SystemResourceKeyID.ActiveBorderColor:
                         return SystemColors.ActiveBorderColor;
 
@@ -624,6 +644,18 @@ namespace System.Windows
 
                     case SystemResourceKeyID.WindowTextColor:
                         return SystemColors.WindowTextColor;
+
+                    case SystemResourceKeyID.AccentColor:
+                        return SystemColors.AccentColor;
+
+                    case SystemResourceKeyID.AccentColorPrimary:
+                        return SystemColors.AccentColorPrimary;
+
+                    case SystemResourceKeyID.AccentColorSecondary:
+                        return SystemColors.AccentColorSecondary;
+
+                    case SystemResourceKeyID.AccentColorTertiary:
+                        return SystemColors.AccentColorTertiary;
 
                     case SystemResourceKeyID.ThinHorizontalBorderHeight:
                         return SystemParameters.ThinHorizontalBorderHeight;
@@ -1177,6 +1209,18 @@ namespace System.Windows
                 case (short)SystemResourceKeyID.InactiveSelectionHighlightTextBrush:
                     return SystemColors.InactiveSelectionHighlightTextBrushKey;
 
+                case (short)SystemResourceKeyID.AccentColorBrush:
+                    return SystemColors.AccentColorBrushKey;
+
+                case (short)SystemResourceKeyID.AccentColorPrimaryBrush:
+                    return SystemColors.AccentColorPrimaryBrushKey;
+
+                case (short)SystemResourceKeyID.AccentColorSecondaryBrush:
+                    return SystemColors.AccentColorSecondaryBrushKey;
+
+                case (short)SystemResourceKeyID.AccentColorTertiaryBrush:
+                    return SystemColors.AccentColorTertiaryBrushKey;
+
                 case (short)SystemResourceKeyID.ActiveBorderColor:
                     return SystemColors.ActiveBorderColorKey;
 
@@ -1266,6 +1310,18 @@ namespace System.Windows
 
                 case (short)SystemResourceKeyID.WindowTextColor:
                     return SystemColors.WindowTextColorKey;
+
+                case (short)SystemResourceKeyID.AccentColor:
+                    return SystemColors.AccentColorKey;
+
+                case (short)SystemResourceKeyID.AccentColorPrimary:
+                    return SystemColors.AccentColorPrimaryKey;
+
+                case (short)SystemResourceKeyID.AccentColorSecondary:
+                    return SystemColors.AccentColorSecondaryKey;
+
+                case (short)SystemResourceKeyID.AccentColorTertiary:
+                    return SystemColors.AccentColorTertiaryKey;
 
                 case (short)SystemResourceKeyID.ThinHorizontalBorderHeight:
                     return SystemParameters.ThinHorizontalBorderHeightKey;
