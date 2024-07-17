@@ -15,4 +15,4 @@ jobs:
         nuget-version: '5.x'
       
     - name: Build
-      run: .\build.cmd -pack -ci -configuration Release -prepareMachine /p:Platform=x86
+      run: .\build.cmd -pack -ci -configuration Debug -prepareMachine /p:Platform=AnyCPU
