@@ -1,25 +1,25 @@
 {
-  "tools": {
-    "dotnet": "7.0.118",
-    "runtimes": {
-      "dotnet": [
-        "2.1.7",
-        "$(VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion)"
-      ]
+    "tools": {
+        "dotnet": "7.0.201",
+        "runtimes": {
+            "dotnet": [
+                "2.1.7",
+                "$(VSRedistCommonNetCoreSharedFrameworkx6470PackageVersion)"
+            ]
+        },
+        "vs": {
+            "version": "17.5.1"
+        }
     },
-    "vs": {
-      "version": "16.11"
+    "msbuild-sdks": {
+        "Microsoft.DotNet.Arcade.Sdk": "7.0.0-beta.24266.2",
+        "Microsoft.DotNet.Helix.Sdk": "7.0.0-beta.24266.2"
+    },
+    "sdk": {
+        "version": "7.0.201"
+    },
+    "native-tools": {
+        "strawberry-perl": "5.28.1.1-1",
+        "net-framework-48-ref-assemblies": "0.0.0.1"
     }
-  },
-  "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "7.0.0-beta.24266.2",
-    "Microsoft.DotNet.Helix.Sdk": "7.0.0-beta.24266.2"
-  },
-  "sdk": {
-    "version": "7.0.118"
-  },
-  "native-tools": {
-    "strawberry-perl": "5.28.1.1-1",
-    "net-framework-48-ref-assemblies": "0.0.0.1"
-  }
 }
