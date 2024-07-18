@@ -16,3 +16,8 @@ jobs:
       
     - name: Build
       run: .\build.cmd -pack -ci -configuration Debug -prepareMachine
+    - name: Push
+      uses: actions/upload-artifact@v1
+      with:
+        name: WPF
+        path: ./artifacts/packages/Release/NonShipping
